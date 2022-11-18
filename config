@@ -12,17 +12,18 @@ general {
 }
 
 #order += "ipv6"
-order += "wireless _first_"
 #order += "ethernet _first_"
-order += "battery all"
 order += "disk /"
 #order += "load"
 order += "memory"
+order += "wireless _first_"
+order += "volume master"
+order += "battery all"
 order += "tztime local"
 
 wireless _first_ {
-        format_up = "  %essid"
-        format_down = "  down"
+        format_up = " %essid"
+        format_down = " down"
 	separator_block_width = 20
 }
 
@@ -34,14 +35,14 @@ ethernet _first_ {
 
 battery all {
         format = "%status %percentage %remaining"
-	status_chr = "  "
-	status_bat = " "
+	status_chr = " "
+	status_bat = ""
         integer_battery_capacity = true
 	separator_block_width = 20
 }
 
 disk "/" {
-        format = "  %avail"
+        format = " %avail"
 	separator_block_width = 20
 }
 
@@ -51,12 +52,19 @@ load {
 }
 
 memory {
-        format = "  %available"
+        format = " %available"
         threshold_degraded = "1G"
         format_degraded = "MEMORY < %available"
 	separator_block_width = 20
 }
 
 tztime local {
-        format = "  %m-%d-%Y %I:%M %p "
+        format = " %m-%d-%Y %I:%M %p "
+}
+
+volume master {
+	format = " %volume"
+	format_muted = ""
+	device = "pulse:alsa_output.pci-0000_03_00.6.analog-stereo"
+	separator_block_width = 20
 }
